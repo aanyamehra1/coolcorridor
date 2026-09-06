@@ -22,7 +22,7 @@ from utils.validation import DataQualityError
 setup_logging()
 
 st.set_page_config(page_title="CoolCorridor", page_icon="🏙️", layout="wide")
-st.title("🏙️ CoolCorridor")
+st.title(" CoolCorridor")
 st.caption(
     "Decision support for prioritizing reflective cool-roof interventions "
     "under a limited municipal budget."

@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/processed/*.geojson
+data/raw/*.tif
+data/processed/satellite_cache/
+.env

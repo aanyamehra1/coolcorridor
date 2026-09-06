@@ -14,9 +14,14 @@ import geopandas as gpd
 import numpy as np
 import pydeck as pdk
 
-SELECTED_COLOR = [255, 255, 255, 235]      # white = targeted for cool-roof coating
-CANDIDATE_COLOR = [220, 90, 60, 150]        # warm red = eligible, not selected
-NON_CANDIDATE_COLOR = [90, 90, 90, 90]      # grey = filtered out / not eligible
+from ui.theme import MAP_CANDIDATE_RGBA, MAP_NON_CANDIDATE_RGBA, MAP_SELECTED_RGBA
+
+# Colors are defined once in ui.theme (shared with the on-screen legend) so
+# the map and its legend can never drift out of sync. Values unchanged in
+# meaning from the original palette — only centralized.
+SELECTED_COLOR = MAP_SELECTED_RGBA      # targeted for cool-roof coating
+CANDIDATE_COLOR = MAP_CANDIDATE_RGBA    # eligible, not selected
+NON_CANDIDATE_COLOR = MAP_NON_CANDIDATE_RGBA  # unused today (kept for parity)
 
 
 def _extrusion_height(gdf: gpd.GeoDataFrame) -> np.ndarray:
@@ -32,7 +37,13 @@ def pd_to_numeric_safe(series):
     return pd.to_numeric(series, errors="coerce")
 
 
-def build_deck(candidates_wgs84: gpd.GeoDataFrame) -> pdk.Deck:
+def build_deck(candidates_wgs84: gpd.GeoDataFrame, dark_mode: bool = True) -> pdk.Deck:
+    """Build the 3D building map.
+
+    `dark_mode` only selects the Mapbox basemap style tile (dark vs. light)
+    to match the app's theme toggle — it has no effect on the underlying
+    data, geometry, or `selected` values.
+    """
     gdf = candidates_wgs84.copy()
     gdf["viz_height_m"] = _extrusion_height(gdf)
     gdf["status_label"] = np.where(
@@ -55,6 +66,7 @@ def build_deck(candidates_wgs84: gpd.GeoDataFrame) -> pdk.Deck:
         get_line_color=[20, 20, 20, 120],
         pickable=True,
         auto_highlight=True,
+        highlight_color=[255, 255, 255, 90],
     )
 
     centroid = gdf.geometry.union_all().centroid
@@ -64,19 +76,33 @@ def build_deck(candidates_wgs84: gpd.GeoDataFrame) -> pdk.Deck:
 
     tooltip = {
         "html": (
+            "<div style='font-family:Inter,sans-serif;line-height:1.5;'>"
             "<b>Building:</b> {osm_building_id}<br/>"
             "<b>Roof area:</b> {roof_area_m2} m²<br/>"
             "<b>LST (median, neighborhood-scale):</b> {lst_median_c}°C<br/>"
             "<b>Thermal anomaly:</b> +{lst_anomaly_c}°C<br/>"
             "<b>Status:</b> {status_label}<br/>"
             "<b>Est. cost:</b> ${intervention_cost_usd}"
+            "</div>"
         ),
-        "style": {"color": "white", "backgroundColor": "#111111"},
+        "style": {
+            "color": "white",
+            "backgroundColor": "#111827",
+            "borderRadius": "8px",
+            "padding": "8px 10px",
+            "fontSize": "0.82rem",
+            "boxShadow": "0 4px 14px rgba(0,0,0,0.35)",
+        },
     }
+
+    basemap = (
+        "mapbox://styles/mapbox/dark-v11" if dark_mode
+        else "mapbox://styles/mapbox/light-v11"
+    )
 
     return pdk.Deck(
         layers=[layer],
         initial_view_state=view_state,
-        map_style="mapbox://styles/mapbox/dark-v11",
+        map_style=basemap,
         tooltip=tooltip,
     )

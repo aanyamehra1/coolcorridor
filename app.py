@@ -16,17 +16,19 @@ from ui.dashboard import (
     render_kpis, render_selection_table,
 )
 from ui.map import build_deck
+from ui.theme import inject_css, is_dark_mode, render_header, render_map_legend, render_theme_toggle
 from utils.logging import setup_logging
 from utils.validation import DataQualityError
 
 setup_logging()
 
 st.set_page_config(page_title="CoolCorridor", page_icon="🏙️", layout="wide")
-st.title("🏙️ CoolCorridor")
-st.caption(
-    "Decision support for prioritizing reflective cool-roof interventions "
-    "under a limited municipal budget."
-)
+
+# Theme toggle first, so the CSS injected right after reflects the current
+# session's choice. Purely presentational -- no effect on any pipeline data.
+render_theme_toggle()
+inject_css()
+render_header()
 
 
 @st.cache_data(show_spinner=False)
@@ -105,7 +107,7 @@ def main() -> None:
     try:
         pipeline_result = _cached_candidates(cache_key)
     except DataQualityError as exc:
-        st.error(f"Could not build the candidate dataset: {exc}")
+        st.error(f"⚠️ Could not build the candidate dataset: {exc}")
         st.stop()
 
     candidates = pipeline_result.candidates
@@ -120,7 +122,11 @@ def main() -> None:
     )
 
     if len(candidates) == 0:
-        st.warning("No candidate buildings meet the current filters.")
+        st.warning(
+            "🔍 No candidate buildings meet the current filters.\n\n"
+            "**Try:** lowering the minimum roof area, lowering the minimum "
+            "thermal anomaly threshold, or widening the study area."
+        )
         st.stop()
 
     st.caption(
@@ -134,9 +140,10 @@ def main() -> None:
     result = optimize_selection(candidates, budget=inputs.budget)
     render_kpis(result, n_candidates=len(candidates))
 
-    st.markdown("### Interactive 3D map")
+    st.markdown("<div class='cc-section-title'>🗺️ Interactive 3D map</div>", unsafe_allow_html=True)
     gdf_wgs84 = result.gdf.to_crs(epsg=4326)
-    st.pydeck_chart(build_deck(gdf_wgs84))
+    st.pydeck_chart(build_deck(gdf_wgs84, dark_mode=is_dark_mode()))
+    render_map_legend()
 
     render_selection_table(result.gdf)
 

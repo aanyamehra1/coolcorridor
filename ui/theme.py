@@ -27,7 +27,7 @@ THEME_STATE_KEY = "cc_dark_mode"
 DARK = {
     "bg": "#0B1220",
     "bg_elevated": "#121A2B",
-    "bg_card": "#141D30",
+    "bg_card": "#121b2e",
     "border": "#223049",
     "text_primary": "#E7ECF3",
     "text_secondary": "#93A4BD",
@@ -327,7 +327,6 @@ def render_header() -> None:
     st.markdown(
         """
         <div class="cc-hero">
-            <div class="cc-hero-icon">🏙️</div>
             <div>
                 <div class="cc-hero-title">CoolCorridor
                     <span class="cc-badge">Prototype</span>

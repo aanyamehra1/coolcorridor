@@ -24,8 +24,11 @@ def apply_economic_model(gdf: pd.DataFrame, econ: EconomicConfig) -> pd.DataFram
     out = gdf.copy()
 
     out["intervention_cost_usd"] = out["roof_area_m2"] * econ.coating_cost_per_m2
+    reflectance_factor = econ.solar_reflectance_delta / 0.50
     out["annual_energy_savings_kwh"] = (
-        out["roof_area_m2"] * econ.annual_cooling_factor_kwh_per_m2
+        out["roof_area_m2"]
+        * econ.annual_cooling_factor_kwh_per_m2
+        * reflectance_factor
     )
     out["annual_savings_usd"] = (
         out["annual_energy_savings_kwh"] * econ.electricity_rate_per_kwh

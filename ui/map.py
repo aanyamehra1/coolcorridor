@@ -1,11 +1,7 @@
 """
 PyDeck map construction.
 
-Building "height" for the 3D extrusion uses OSM's `height` tag when present
-(a real, surveyed-ish value, though still OSM-community-sourced and not
-authoritative) and falls back to a visual proxy derived from footprint area
-otherwise. The fallback is for visual legibility only -- it is not a height
-measurement, and is not presented as one in the tooltip.
+Color is mapped accurately to the new teal-to-terracotta visual identity.
 """
 
 from __future__ import annotations
@@ -14,9 +10,14 @@ import geopandas as gpd
 import numpy as np
 import pydeck as pdk
 
-CANDIDATE_COLOR = [255, 255, 255, 235]      # white = targeted for cool-roof coating
-SELECTED_COLOR = [220, 90, 60, 150]        # warm red = eligible, not selected
-NON_CANDIDATE_COLOR = [90, 90, 90, 90]      # grey = filtered out / not eligible
+from ui.theme import (
+    MAP_CANDIDATE_RGBA,
+    MAP_NON_CANDIDATE_RGBA,
+    selected_building_color,
+    C_DEEP_TEAL,
+    C_OFF_WHITE,
+    C_TAUPE,
+)
 
 
 def _extrusion_height(gdf: gpd.GeoDataFrame) -> np.ndarray:
@@ -32,27 +33,47 @@ def pd_to_numeric_safe(series):
     return pd.to_numeric(series, errors="coerce")
 
 
+def _fill_colors(gdf: gpd.GeoDataFrame) -> list:
+    has_benefit = "benefit_score" in gdf.columns
+    selected_mask = gdf["selected"] == 1
+
+    if has_benefit and selected_mask.any():
+        selected_scores = gdf.loc[selected_mask, "benefit_score"]
+        min_score = float(selected_scores.min())
+        max_score = float(selected_scores.max())
+    else:
+        min_score = max_score = 0.0
+
+    colors = []
+    for is_selected, score in zip(
+        selected_mask, gdf["benefit_score"] if has_benefit else [None] * len(gdf)
+    ):
+        if is_selected:
+            colors.append(selected_building_color(score, min_score, max_score))
+        else:
+            colors.append(MAP_CANDIDATE_RGBA)
+    return colors
+
+
 def build_deck(candidates_wgs84: gpd.GeoDataFrame) -> pdk.Deck:
     gdf = candidates_wgs84.copy()
     gdf["viz_height_m"] = _extrusion_height(gdf)
     gdf["status_label"] = np.where(
         gdf["selected"] == 1, "Selected for treatment", "Candidate (not selected)"
     )
-    gdf["fill_color"] = gdf["selected"].apply(
-        lambda s: SELECTED_COLOR if s == 1 else CANDIDATE_COLOR
-    )
+    gdf["fill_color"] = _fill_colors(gdf)
 
     layer = pdk.Layer(
         "GeoJsonLayer",
         gdf,
-        opacity=0.85,
+        opacity=0.9,
         stroked=True,
         filled=True,
         extruded=True,
         wireframe=True,
         get_elevation="viz_height_m",
         get_fill_color="fill_color",
-        get_line_color=[20, 20, 20, 120],
+        get_line_color=[255, 255, 255, 40],
         pickable=True,
         auto_highlight=True,
     )
@@ -64,14 +85,26 @@ def build_deck(candidates_wgs84: gpd.GeoDataFrame) -> pdk.Deck:
 
     tooltip = {
         "html": (
-            "<b>Building:</b> {osm_building_id}<br/>"
-            "<b>Roof area:</b> {roof_area_m2} m²<br/>"
-            "<b>LST (median, neighborhood-scale):</b> {lst_median_c}°C<br/>"
-            "<b>Thermal anomaly:</b> +{lst_anomaly_c}°C<br/>"
+            "<div style='font-family: Montserrat, sans-serif;'>"
+            "<b style='color: #AB907A; font-size: 0.8rem; text-transform: uppercase;'>Building Info</b><br/>"
+            "<span style='font-size: 0.9rem;'>"
+            "<b>ID:</b> {osm_building_id}<br/>"
+            "<b>Area:</b> {roof_area_m2} m²<br/>"
+            "<b>LST (Median):</b> {lst_median_c}°C<br/>"
+            "<b>Anomaly:</b> +{lst_anomaly_c}°C<br/>"
+            "<b>Score:</b> {benefit_score}<br/>"
             "<b>Status:</b> {status_label}<br/>"
-            "<b>Est. cost:</b> ${intervention_cost_usd}"
+            "<b>Est. Cost:</b> ${intervention_cost_usd}"
+            "</span></div>"
         ),
-        "style": {"color": "white", "backgroundColor": "#111111"},
+        "style": {
+            "color": C_OFF_WHITE,
+            "backgroundColor": C_DEEP_TEAL,
+            "border": f"1px solid {C_TAUPE}",
+            "borderRadius": "4px",
+            "padding": "12px",
+            "boxShadow": "0 4px 12px rgba(0,0,0,0.15)",
+        },
     }
 
     return pdk.Deck(

@@ -26,15 +26,8 @@ in the UI (never silently swapped in) -- see `services/pipeline.py`.
   (GeoTIFF + JSON metadata), written by `services/satellite.py` (gitignored).
   Safe to delete; it will be refetched on demand.
 
-The original uploaded project shipped a single-feature
-`phoenix_buildings.geojson` with fabricated, article-style building
-attributes (a named real building, an invented surface temperature,
-solar potential, etc.) under a schema (`footprint_area_sqm`,
-`surface_temp_c`, `heat_vulnerability_index`, ...) that didn't match what
-`optimization.py` actually read (`roof_area`, `lst_median`, `svi_score`).
-That file has been removed rather than "fixed" — presenting fabricated
-per-building data as if it were real is exactly the kind of scientific
-misrepresentation this project's own spec warns against. Real data should
-come from `services.osm.fetch_building_footprints` (live OSM) or, for
-thermal data, a real Landsat scene; short of that, use the explicitly
-labelled mock paths in `services.raster` / `services.vulnerability`.
+The active pipeline uses `roof_area_m2`, `lst_median_c`, and `svi_score`.
+No fabricated per-building dataset is committed. Real building data comes
+from `services.osm.fetch_building_footprints` (live OSM), while thermal data
+comes from a real Landsat scene when available or from the explicitly
+labelled mock path in `services.raster`.

@@ -13,20 +13,24 @@ from services.pipeline import build_candidate_dataset
 from services.optimization import optimize_selection
 from ui.dashboard import (
     render_sidebar, to_app_config, render_data_quality_banner,
-    render_kpis, render_selection_table,
+    render_kpis, render_selection_table, render_about_section,
 )
 from ui.map import build_deck
+from ui.theme import inject_css, render_header, render_map_legend, render_theme_toggle
 from utils.logging import setup_logging
 from utils.validation import DataQualityError
 
 setup_logging()
 
-st.set_page_config(page_title="CoolCorridor", page_icon="🏙️", layout="wide")
-st.title(" CoolCorridor")
-st.caption(
-    "Decision support for prioritizing reflective cool-roof interventions "
-    "under a limited municipal budget."
-)
+st.set_page_config(page_title="CoolCorridor", layout="wide")
+
+# Theme toggle first, so the CSS injected right after reflects the user's
+# current light/dark choice; then the styled header replaces the plain
+# st.title/st.caption pair.
+render_theme_toggle()
+inject_css()
+render_header()
+render_about_section()
 
 
 @st.cache_data(show_spinner=False)
@@ -123,20 +127,24 @@ def main() -> None:
         st.warning("No candidate buildings meet the current filters.")
         st.stop()
 
-    st.caption(
-        f"District thermal baseline (median LST): "
-        f"{pipeline_result.thermal_baseline_c:.1f}°C. "
-        "LST is surface temperature, not air temperature, and reflects a "
-        "neighborhood-scale thermal signal rather than precise roof-level "
-        "measurement (see raster resolution note in services/raster.py)."
-    )
-
     result = optimize_selection(candidates, budget=inputs.budget)
-    render_kpis(result, n_candidates=len(candidates))
 
-    st.markdown("### Interactive 3D map")
-    gdf_wgs84 = result.gdf.to_crs(epsg=4326)
-    st.pydeck_chart(build_deck(gdf_wgs84))
+    st.markdown('<div class="cc-section-title">Results at a glance</div>', unsafe_allow_html=True)
+    with st.container(border=True):
+        st.caption(
+            f"District thermal baseline (median LST): "
+            f"{pipeline_result.thermal_baseline_c:.1f}°C. LST is surface "
+            "temperature, not air temperature, and reflects a "
+            "neighborhood-scale thermal signal rather than precise "
+            "roof-level measurement."
+        )
+        render_kpis(result, n_candidates=len(candidates))
+
+    st.markdown('<div class="cc-section-title">Explore the map</div>', unsafe_allow_html=True)
+    with st.container(border=True):
+        gdf_wgs84 = result.gdf.to_crs(epsg=4326)
+        st.pydeck_chart(build_deck(gdf_wgs84))
+        render_map_legend()
 
     render_selection_table(result.gdf)
 

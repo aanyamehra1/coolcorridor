@@ -23,3 +23,12 @@ def test_apply_economic_model_zero_area_no_div_by_zero():
     econ = EconomicConfig()
     out = apply_economic_model(df, econ)
     assert pd.isna(out["payback_years"].iloc[0])
+
+
+def test_apply_economic_model_scales_savings_with_reflectance_delta():
+    df = pd.DataFrame({"roof_area_m2": [10000.0]})
+    econ = EconomicConfig(solar_reflectance_delta=0.25)
+
+    out = apply_economic_model(df, econ)
+
+    assert out["annual_energy_savings_kwh"].iloc[0] == pytest.approx(90000.0)

@@ -1,17 +1,10 @@
 """
 Visual theme for CoolCorridor — frontend presentation only.
 
-This module owns every color, font, and CSS rule in the app. It has no
-knowledge of buildings, LST, PuLP, or any pipeline data — it only decides
-how things *look*. That separation is deliberate: nothing here should ever
-need to change when the scoring model, satellite acquisition, or
-optimization logic changes, and nothing in services/ or utils/ should ever
-need to import this module.
-
-Theme state (light vs. dark) is stored in `st.session_state` under
-THEME_STATE_KEY, so it persists for the lifetime of the browser session
-(Streamlit's normal session-state behavior) without touching any pipeline
-caching or config.
+Palette: Extracted exactly from the reference image.
+Deep Teal, Turquoise, Taupe, Tan, Burnt Orange, and Deep Brown.
+Both light and dark modes are built exclusively from these tones to create 
+a premium, warm, climate-tech aesthetic without generic dashboard colours.
 """
 from __future__ import annotations
 
@@ -20,45 +13,71 @@ import streamlit as st
 THEME_STATE_KEY = "cc_dark_mode"
 
 # ---------------------------------------------------------------------------
-# Palette
+# Exact Palette from Reference Image
 # ---------------------------------------------------------------------------
-# Chosen for: a "climate-tech" feel (deep teal/cyan = cool/mitigation,
-# amber = heat/priority) and AA-level contrast in both modes.
+C_DEEP_TEAL = "#064E52"
+C_TURQUOISE = "#0C7C81"
+C_TAUPE     = "#AB907A"
+C_TAN       = "#996D47"
+C_ORANGE    = "#B35C1E"
+C_BROWN     = "#7D3D1A"
+
+# Tints for backgrounds and soft accents
+C_OFF_WHITE = "#F8F6F4"
+C_DARK_BG   = "#03282A"
+
 DARK = {
-    "bg": "#0B1220",
-    "bg_elevated": "#121A2B",
-    "bg_card": "#121b2e",
-    "border": "#223049",
-    "text_primary": "#E7ECF3",
-    "text_secondary": "#93A4BD",
-    "accent": "#2DD4BF",       # teal — primary brand accent
-    "accent_soft": "rgba(45, 212, 191, 0.14)",
-    "heat": "#FBBF24",         # amber — heat / selected-for-treatment
-    "danger": "#F87171",
-    "success": "#34D399",
-    "info": "#38BDF8",
+    "bg": C_DARK_BG,
+    "bg_elevated": C_DEEP_TEAL,
+    "bg_card": C_DEEP_TEAL,
+    "border": C_TAN,
+    "text_primary": C_OFF_WHITE,
+    "text_secondary": C_TAUPE,
+    "accent": C_TURQUOISE,
+    "accent_soft": "rgba(12, 124, 129, 0.15)",
+    "heat": C_ORANGE,
+    "heat_soft": "rgba(179, 92, 30, 0.15)",
+    "danger": C_ORANGE,
+    "success": C_TURQUOISE,
+    "info": C_TAN,
 }
 
 LIGHT = {
-    "bg": "#F6F8FB",
+    "bg": C_OFF_WHITE,
     "bg_elevated": "#FFFFFF",
     "bg_card": "#FFFFFF",
-    "border": "#E2E8F0",
-    "text_primary": "#0F172A",
-    "text_secondary": "#51617A",
-    "accent": "#0D9488",
-    "accent_soft": "rgba(13, 148, 136, 0.10)",
-    "heat": "#D97706",
-    "danger": "#DC2626",
-    "success": "#059669",
-    "info": "#0284C7",
+    "border": C_TAUPE,
+    "text_primary": C_DEEP_TEAL,
+    "text_secondary": C_BROWN,
+    "accent": C_TURQUOISE,
+    "accent_soft": "rgba(12, 124, 129, 0.10)",
+    "heat": C_ORANGE,
+    "heat_soft": "rgba(179, 92, 30, 0.10)",
+    "danger": C_ORANGE,
+    "success": C_TURQUOISE,
+    "info": C_TAN,
 }
 
-# Shared with ui/map.py so the legend and the actual map layer can never
-# drift out of sync — one source of truth for "what color means what".
-MAP_SELECTED_RGBA = [251, 191, 36, 235]     # amber — targeted for treatment
-MAP_CANDIDATE_RGBA = [45, 212, 191, 130]    # teal — eligible, not selected
-MAP_NON_CANDIDATE_RGBA = [120, 130, 145, 70]  # unused today (kept for parity)
+# ---------------------------------------------------------------------------
+# Map layer colors 
+# ---------------------------------------------------------------------------
+# Muted turquoise for eligible candidates
+MAP_CANDIDATE_RGBA = [12, 124, 129, 140]       
+MAP_NON_CANDIDATE_RGBA = [171, 144, 122, 60]    
+
+# Gradient runs from warm tan to deep burnt orange/brown
+MAP_SELECTED_LOW_RGBA = [153, 109, 71, 235]     
+MAP_SELECTED_HIGH_RGBA = [179, 92, 30, 235]     
+
+
+def selected_building_color(benefit_score: float, min_score: float, max_score: float) -> list:
+    if benefit_score is None or max_score <= min_score:
+        t = 1.0
+    else:
+        t = (benefit_score - min_score) / (max_score - min_score)
+    t = max(0.0, min(1.0, t))
+    low, high = MAP_SELECTED_LOW_RGBA, MAP_SELECTED_HIGH_RGBA
+    return [int(low[i] + (high[i] - low[i]) * t) for i in range(4)]
 
 
 def is_dark_mode() -> bool:
@@ -70,38 +89,36 @@ def palette() -> dict:
 
 
 def render_theme_toggle() -> bool:
-    """Sidebar light/dark switch. Call once, before any other UI renders,
-    so the CSS injected afterward reflects the current choice. Persists via
-    `st.session_state` for the rest of the browser session.
-    """
     st.session_state.setdefault(THEME_STATE_KEY, True)
-    with st.sidebar:
-        col_label, col_toggle = st.columns([3, 1], vertical_alignment="center")
-        col_label.markdown(
-            "<span style='font-size:0.85rem;font-weight:600;"
-            "color:var(--cc-text-secondary);'>🌓 Dark mode</span>",
-            unsafe_allow_html=True,
-        )
-        col_toggle.toggle(
-            "Dark mode", key=THEME_STATE_KEY, label_visibility="collapsed"
-        )
-        st.markdown("<div style='height:0.35rem'></div>", unsafe_allow_html=True)
+    
+    st.markdown(
+        """
+        <style>
+        .theme-toggle-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 1rem 0;
+            width: 100%;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    col1, col2 = st.columns([10, 2])
+    with col2:
+        st.toggle("Dark Mode", key=THEME_STATE_KEY)
+    
     return is_dark_mode()
 
 
 def inject_css() -> None:
-    """Inject CSS variables + component restyling for the current theme.
-
-    Every rule targets Streamlit's existing DOM (via stable `data-testid`
-    hooks) or general HTML elements — this never changes what a widget
-    *does*, only how it's painted. Re-run on every rerun so switching the
-    toggle takes effect immediately.
-    """
     p = palette()
     st.markdown(
         f"""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap');
 
         :root {{
             --cc-bg: {p['bg']};
@@ -113,14 +130,15 @@ def inject_css() -> None:
             --cc-accent: {p['accent']};
             --cc-accent-soft: {p['accent_soft']};
             --cc-heat: {p['heat']};
-            --cc-danger: {p['danger']};
-            --cc-success: {p['success']};
-            --cc-info: {p['info']};
+            --cc-heat-soft: {p['heat_soft']};
+            --cc-serif: 'Cinzel', serif;
+            --cc-sans: 'Montserrat', sans-serif;
         }}
 
         html, body, [class*="css"] {{
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-                         Roboto, Helvetica, Arial, sans-serif !important;
+            font-family: var(--cc-sans) !important;
+            background-color: var(--cc-bg) !important;
+            color: var(--cc-text);
         }}
 
         .stApp {{
@@ -128,193 +146,161 @@ def inject_css() -> None:
             color: var(--cc-text);
         }}
 
-        /* Slightly narrower, more readable max width on very wide desktop
-           monitors, without breaking the "wide" layout on normal screens. */
         .block-container {{
-            max-width: 1400px;
-            padding-top: 1.5rem;
+            max-width: 1200px;
+            padding-top: 2rem;
+            padding-bottom: 5rem;
         }}
 
-        h1, h2, h3 {{
+        h1, h2, h3, .cc-hero-title {{
+            font-family: var(--cc-serif) !important;
             color: var(--cc-text) !important;
-            font-weight: 700 !important;
-            letter-spacing: -0.01em;
+            font-weight: 500 !important;
         }}
+
         p, span, label, .stMarkdown {{
             color: var(--cc-text);
+            font-weight: 400;
         }}
+
         .stCaption, [data-testid="stCaptionContainer"] {{
             color: var(--cc-text-secondary) !important;
         }}
 
-        /* Sidebar */
-        [data-testid="stSidebar"] {{
-            background: var(--cc-bg-elevated);
-            border-right: 1px solid var(--cc-border);
-        }}
-        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2,
-        [data-testid="stSidebar"] h3 {{
-            font-size: 1rem !important;
+        /* Hide the sidebar completely as we moved to a scroll layout */
+        [data-testid="collapsedControl"] {{
+            display: none !important;
         }}
 
-        /* Bordered containers used to group sidebar sections into cards */
+        /* Containers & Cards */
         [data-testid="stVerticalBlockBorderWrapper"] {{
             background: var(--cc-bg-card);
             border: 1px solid var(--cc-border) !important;
-            border-radius: 12px !important;
-            transition: border-color 0.15s ease, box-shadow 0.15s ease;
-        }}
-        [data-testid="stVerticalBlockBorderWrapper"]:hover {{
-            border-color: var(--cc-accent) !important;
-            box-shadow: 0 0 0 1px var(--cc-accent-soft);
+            border-radius: 4px !important;
+            padding: 1.5rem;
         }}
 
-        /* Metric cards */
+        /* Metrics */
         [data-testid="stMetric"] {{
             background: var(--cc-bg-card);
             border: 1px solid var(--cc-border);
-            border-radius: 12px;
-            padding: 0.9rem 1rem 0.7rem 1rem;
-            transition: transform 0.15s ease, box-shadow 0.15s ease,
-                        border-color 0.15s ease;
-        }}
-        [data-testid="stMetric"]:hover {{
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-            border-color: var(--cc-accent);
+            border-radius: 4px;
+            padding: 1.5rem;
+            text-align: center;
         }}
         [data-testid="stMetricLabel"] {{
             color: var(--cc-text-secondary) !important;
-            font-weight: 600 !important;
-            font-size: 0.78rem !important;
+            font-weight: 500 !important;
+            font-size: 0.85rem !important;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.05em;
+            justify-content: center;
         }}
         [data-testid="stMetricValue"] {{
             color: var(--cc-text) !important;
-            font-weight: 700 !important;
+            font-family: var(--cc-serif) !important;
+            font-size: 2rem !important;
+            justify-content: center;
         }}
 
-        /* Alerts */
-        .stAlert {{
-            border-radius: 10px !important;
-            border: 1px solid var(--cc-border) !important;
+        /* Progress Bar */
+        [data-testid="stProgress"] div[role="progressbar"] > div {{
+            background: linear-gradient(90deg, var(--cc-accent), var(--cc-heat)) !important;
         }}
 
         /* Expanders */
         [data-testid="stExpander"] {{
             border: 1px solid var(--cc-border) !important;
-            border-radius: 10px !important;
-            background: var(--cc-bg-card);
-            overflow: hidden;
-        }}
-        [data-testid="stExpander"] summary {{
-            transition: background 0.15s ease;
-        }}
-        [data-testid="stExpander"] summary:hover {{
-            background: var(--cc-accent-soft);
-        }}
-
-        /* Status widget (pipeline loading stages) */
-        [data-testid="stStatusWidget"] {{
-            border: 1px solid var(--cc-border) !important;
-            border-radius: 10px !important;
+            border-radius: 4px !important;
             background: var(--cc-bg-card);
         }}
 
-        /* Dataframes */
+        /* Dataframes - Enforce Wrapping */
         [data-testid="stDataFrame"] {{
             border: 1px solid var(--cc-border);
-            border-radius: 10px;
-            overflow: hidden;
+            border-radius: 4px;
+        }}
+        [data-testid="stDataFrame"] td, 
+        [data-testid="stDataFrame"] th,
+        [data-testid="stDataFrame"] div[data-testid="StyledDataFrameDataCell"] {{
+            white-space: normal !important;
+            word-wrap: break-word !important;
+            line-height: 1.5;
         }}
 
-        /* Sliders / number inputs: accent color */
-        [data-baseweb="slider"] div[role="slider"] {{
-            background-color: var(--cc-accent) !important;
-        }}
-        .stSlider [data-testid="stTickBarMin"],
-        .stSlider [data-testid="stTickBarMax"] {{
-            color: var(--cc-text-secondary) !important;
-        }}
-
-        hr {{
-            border-color: var(--cc-border) !important;
-        }}
-
-        /* Hero header */
+        /* Hero */
         .cc-hero {{
+            text-align: center;
+            padding: 5rem 0 4rem 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 0.9rem;
-            padding: 0.25rem 0 1.1rem 0;
-            border-bottom: 1px solid var(--cc-border);
-            margin-bottom: 1.4rem;
-        }}
-        .cc-hero-icon {{
-            font-size: 2.1rem;
-            line-height: 1;
+            justify-content: center;
         }}
         .cc-hero-title {{
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: clamp(3rem, 6vw, 5rem);
+            letter-spacing: 0.15em;
+            margin: 0 0 1rem 0;
             color: var(--cc-text);
-            margin: 0;
-            letter-spacing: -0.01em;
         }}
-        .cc-hero-sub {{
-            font-size: 0.92rem;
-            color: var(--cc-text-secondary);
-            margin-top: 0.15rem;
+        .cc-hero-decor {{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
         }}
-        .cc-badge {{
-            display: inline-block;
-            font-size: 0.68rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: var(--cc-accent);
-            background: var(--cc-accent-soft);
-            border: 1px solid var(--cc-accent);
-            border-radius: 999px;
-            padding: 0.15rem 0.55rem;
-            margin-left: 0.6rem;
-            vertical-align: middle;
+        .cc-hero-line {{
+            height: 1px;
+            width: 60px;
+            background-color: var(--cc-border);
+        }}
+        .cc-hero-dot {{
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--cc-accent);
+        }}
+        .cc-hero-dot.heat {{
+            background-color: var(--cc-heat);
         }}
 
-        /* Map legend */
+        /* Legend */
         .cc-legend {{
             display: flex;
             flex-wrap: wrap;
-            gap: 1.2rem;
+            gap: 2rem;
             align-items: center;
+            justify-content: center;
             background: var(--cc-bg-card);
             border: 1px solid var(--cc-border);
-            border-radius: 10px;
-            padding: 0.6rem 1rem;
-            margin-top: 0.6rem;
+            border-radius: 4px;
+            padding: 1rem 2rem;
+            margin-top: 1rem;
             font-size: 0.85rem;
             color: var(--cc-text-secondary);
+            font-family: var(--cc-sans);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }}
         .cc-legend-item {{
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }}
         .cc-legend-swatch {{
-            width: 14px;
-            height: 14px;
-            border-radius: 4px;
-            display: inline-block;
-            border: 1px solid rgba(0,0,0,0.15);
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
         }}
-
-        /* Section card wrapper (main content) */
-        .cc-section-title {{
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--cc-text);
-            margin: 1.6rem 0 0.5rem 0;
+        .cc-legend-gradient {{
+            width: 60px;
+            height: 12px;
+            border-radius: 2px;
+        }}
+        
+        /* Sliders & Inputs */
+        [data-baseweb="slider"] div[role="slider"] {{
+            background-color: var(--cc-accent) !important;
         }}
         </style>
         """,
@@ -323,18 +309,15 @@ def inject_css() -> None:
 
 
 def render_header() -> None:
-    """Styled hero header, replacing a plain st.title/st.caption pair."""
     st.markdown(
         """
         <div class="cc-hero">
-            <div>
-                <div class="cc-hero-title">CoolCorridor
-                    <span class="cc-badge">Prototype</span>
-                </div>
-                <div class="cc-hero-sub">
-                    Decision support for prioritizing reflective cool-roof
-                    interventions under a limited municipal budget.
-                </div>
+            <h1 class="cc-hero-title">COOLCORRIDOR</h1>
+            <div class="cc-hero-decor">
+                <div class="cc-hero-line"></div>
+                <div class="cc-hero-dot"></div>
+                <div class="cc-hero-dot heat"></div>
+                <div class="cc-hero-line"></div>
             </div>
         </div>
         """,
@@ -343,10 +326,7 @@ def render_header() -> None:
 
 
 def render_map_legend() -> None:
-    """Legend for ui.map.build_deck's fill colors. Kept in sync via the
-    shared MAP_*_RGBA constants imported by both modules.
-    """
-    def _rgba(c: list[int]) -> str:
+    def _rgba(c: list) -> str:
         r, g, b, a = c
         return f"rgba({r},{g},{b},{a / 255:.2f})"
 
@@ -354,15 +334,12 @@ def render_map_legend() -> None:
         f"""
         <div class="cc-legend">
             <div class="cc-legend-item">
-                <span class="cc-legend-swatch" style="background:{_rgba(MAP_SELECTED_RGBA)}"></span>
-                Selected for treatment
+                <span class="cc-legend-gradient" style="background:linear-gradient(90deg, {_rgba(MAP_SELECTED_LOW_RGBA)}, {_rgba(MAP_SELECTED_HIGH_RGBA)});"></span>
+                Selected (Low to High Benefit)
             </div>
             <div class="cc-legend-item">
                 <span class="cc-legend-swatch" style="background:{_rgba(MAP_CANDIDATE_RGBA)}"></span>
-                Eligible candidate (not selected)
-            </div>
-            <div class="cc-legend-item" style="margin-left:auto;color:var(--cc-text-secondary);">
-                Drag to rotate · scroll to zoom · click a building for details
+                Eligible Candidate
             </div>
         </div>
         """,

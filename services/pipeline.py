@@ -59,6 +59,9 @@ class PipelineResult:
     thermal_limitations: list = field(default_factory=list)
     used_live_satellite: bool = False
     satellite_scenes: list = field(default_factory=list)  # list[satellite.SceneMetadata]
+    used_ml_urgency: bool = False
+    neighborhood_urgency_summary: list = field(default_factory=list)
+
 
 
 def build_candidate_dataset(config: AppConfig, on_progress=None) -> PipelineResult:
@@ -194,6 +197,30 @@ def build_candidate_dataset(config: AppConfig, on_progress=None) -> PipelineResu
     else:
         candidates = vulnerability.attach_vulnerability(candidates)
 
+    # 6b. Machine Learning Neighborhood Urgency
+    used_ml_urgency = False
+    neighborhood_urgency_summary = []
+    if getattr(config, "ml", None) and config.ml.enable_ml_urgency:
+        progress("Running ML historical trajectory model to forecast neighborhood urgency...")
+        try:
+            from services.ml_urgency import run_neighborhood_urgency_pipeline
+            tract_urgency_df, neighborhood_urgency_summary = run_neighborhood_urgency_pipeline(
+                config.ml.historical_panel_path,
+                current_year=config.ml.current_year,
+                lookback_years=config.ml.lookback_years,
+            )
+            candidates = vulnerability.attach_neighborhood_urgency(candidates, tract_urgency_df)
+            used_ml_urgency = True
+            report.add(
+                f"ML Neighborhood Urgency: Evaluated {len(tract_urgency_df)} census tracts over {config.ml.lookback_years}-year historical trajectory."
+            )
+        except Exception as exc:
+            logger.warning("ML Neighborhood Urgency model failed (%s); using default urgency.", exc)
+            report.add(f"ML Neighborhood Urgency fallback: {exc}")
+            candidates = vulnerability.attach_neighborhood_urgency(candidates, None)
+    else:
+        candidates = vulnerability.attach_neighborhood_urgency(candidates, None)
+
     # 7. Economic model
     from services.economics import apply_economic_model
     candidates = apply_economic_model(candidates, config.economics)
@@ -211,4 +238,7 @@ def build_candidate_dataset(config: AppConfig, on_progress=None) -> PipelineResu
         thermal_limitations=thermal_limitations,
         used_live_satellite=used_live_satellite,
         satellite_scenes=satellite_scenes,
+        used_ml_urgency=used_ml_urgency,
+        neighborhood_urgency_summary=neighborhood_urgency_summary,
     )
+

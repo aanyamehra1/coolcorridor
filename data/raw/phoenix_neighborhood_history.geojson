@@ -1,0 +1,1559 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112500",
+        "tract_name": "Downtown Core / Central Ave Corridor",
+        "year": 2018,
+        "lst_median_c": 44.2,
+        "lst_anomaly_c": 2.7,
+        "ndvi_mean": 0.12,
+        "svi_score": 0.65,
+        "poverty_rate": 0.24,
+        "elderly_pct": 0.11,
+        "impervious_pct": 0.85,
+        "extreme_heat_days": 42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112500",
+        "tract_name": "Downtown Core / Central Ave Corridor",
+        "year": 2019,
+        "lst_median_c": 44.42,
+        "lst_anomaly_c": 2.62,
+        "ndvi_mean": 0.117,
+        "svi_score": 0.66,
+        "poverty_rate": 0.248,
+        "elderly_pct": 0.113,
+        "impervious_pct": 0.855,
+        "extreme_heat_days": 43
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112500",
+        "tract_name": "Downtown Core / Central Ave Corridor",
+        "year": 2020,
+        "lst_median_c": 44.64,
+        "lst_anomaly_c": 2.34,
+        "ndvi_mean": 0.114,
+        "svi_score": 0.67,
+        "poverty_rate": 0.256,
+        "elderly_pct": 0.116,
+        "impervious_pct": 0.86,
+        "extreme_heat_days": 45
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112500",
+        "tract_name": "Downtown Core / Central Ave Corridor",
+        "year": 2021,
+        "lst_median_c": 44.86,
+        "lst_anomaly_c": 2.76,
+        "ndvi_mean": 0.111,
+        "svi_score": 0.68,
+        "poverty_rate": 0.264,
+        "elderly_pct": 0.119,
+        "impervious_pct": 0.865,
+        "extreme_heat_days": 46
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112500",
+        "tract_name": "Downtown Core / Central Ave Corridor",
+        "year": 2022,
+        "lst_median_c": 45.08,
+        "lst_anomaly_c": 2.38,
+        "ndvi_mean": 0.108,
+        "svi_score": 0.69,
+        "poverty_rate": 0.272,
+        "elderly_pct": 0.122,
+        "impervious_pct": 0.87,
+        "extreme_heat_days": 48
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0836,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112500",
+        "tract_name": "Downtown Core / Central Ave Corridor",
+        "year": 2023,
+        "lst_median_c": 45.3,
+        "lst_anomaly_c": 2.3,
+        "ndvi_mean": 0.105,
+        "svi_score": 0.7,
+        "poverty_rate": 0.28,
+        "elderly_pct": 0.125,
+        "impervious_pct": 0.875,
+        "extreme_heat_days": 49
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.085,
+              33.435
+            ],
+            [
+              -112.063,
+              33.435
+            ],
+            [
+              -112.063,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.435
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112600",
+        "tract_name": "Warehouse District & South Rail Corridor",
+        "year": 2018,
+        "lst_median_c": 46.1,
+        "lst_anomaly_c": 4.6,
+        "ndvi_mean": 0.08,
+        "svi_score": 0.82,
+        "poverty_rate": 0.35,
+        "elderly_pct": 0.16,
+        "impervious_pct": 0.91,
+        "extreme_heat_days": 49
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.085,
+              33.435
+            ],
+            [
+              -112.063,
+              33.435
+            ],
+            [
+              -112.063,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.435
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112600",
+        "tract_name": "Warehouse District & South Rail Corridor",
+        "year": 2019,
+        "lst_median_c": 46.58,
+        "lst_anomaly_c": 4.78,
+        "ndvi_mean": 0.072,
+        "svi_score": 0.835,
+        "poverty_rate": 0.362,
+        "elderly_pct": 0.163,
+        "impervious_pct": 0.915,
+        "extreme_heat_days": 50
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.085,
+              33.435
+            ],
+            [
+              -112.063,
+              33.435
+            ],
+            [
+              -112.063,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.435
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112600",
+        "tract_name": "Warehouse District & South Rail Corridor",
+        "year": 2020,
+        "lst_median_c": 47.06,
+        "lst_anomaly_c": 4.76,
+        "ndvi_mean": 0.064,
+        "svi_score": 0.85,
+        "poverty_rate": 0.374,
+        "elderly_pct": 0.166,
+        "impervious_pct": 0.92,
+        "extreme_heat_days": 52
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.085,
+              33.435
+            ],
+            [
+              -112.063,
+              33.435
+            ],
+            [
+              -112.063,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.435
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112600",
+        "tract_name": "Warehouse District & South Rail Corridor",
+        "year": 2021,
+        "lst_median_c": 47.54,
+        "lst_anomaly_c": 5.44,
+        "ndvi_mean": 0.056,
+        "svi_score": 0.865,
+        "poverty_rate": 0.386,
+        "elderly_pct": 0.169,
+        "impervious_pct": 0.925,
+        "extreme_heat_days": 53
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.085,
+              33.435
+            ],
+            [
+              -112.063,
+              33.435
+            ],
+            [
+              -112.063,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.435
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112600",
+        "tract_name": "Warehouse District & South Rail Corridor",
+        "year": 2022,
+        "lst_median_c": 48.02,
+        "lst_anomaly_c": 5.32,
+        "ndvi_mean": 0.048,
+        "svi_score": 0.88,
+        "poverty_rate": 0.398,
+        "elderly_pct": 0.172,
+        "impervious_pct": 0.93,
+        "extreme_heat_days": 55
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.085,
+              33.435
+            ],
+            [
+              -112.063,
+              33.435
+            ],
+            [
+              -112.063,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.4444
+            ],
+            [
+              -112.085,
+              33.435
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112600",
+        "tract_name": "Warehouse District & South Rail Corridor",
+        "year": 2023,
+        "lst_median_c": 48.5,
+        "lst_anomaly_c": 5.5,
+        "ndvi_mean": 0.04,
+        "svi_score": 0.895,
+        "poverty_rate": 0.41,
+        "elderly_pct": 0.175,
+        "impervious_pct": 0.935,
+        "extreme_heat_days": 56
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112700",
+        "tract_name": "East Van Buren Commercial Corridor",
+        "year": 2018,
+        "lst_median_c": 45.4,
+        "lst_anomaly_c": 3.9,
+        "ndvi_mean": 0.1,
+        "svi_score": 0.86,
+        "poverty_rate": 0.38,
+        "elderly_pct": 0.18,
+        "impervious_pct": 0.88,
+        "extreme_heat_days": 46
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112700",
+        "tract_name": "East Van Buren Commercial Corridor",
+        "year": 2019,
+        "lst_median_c": 45.82,
+        "lst_anomaly_c": 4.02,
+        "ndvi_mean": 0.093,
+        "svi_score": 0.872,
+        "poverty_rate": 0.39,
+        "elderly_pct": 0.183,
+        "impervious_pct": 0.885,
+        "extreme_heat_days": 47
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112700",
+        "tract_name": "East Van Buren Commercial Corridor",
+        "year": 2020,
+        "lst_median_c": 46.24,
+        "lst_anomaly_c": 3.94,
+        "ndvi_mean": 0.086,
+        "svi_score": 0.884,
+        "poverty_rate": 0.399,
+        "elderly_pct": 0.186,
+        "impervious_pct": 0.89,
+        "extreme_heat_days": 49
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112700",
+        "tract_name": "East Van Buren Commercial Corridor",
+        "year": 2021,
+        "lst_median_c": 46.66,
+        "lst_anomaly_c": 4.56,
+        "ndvi_mean": 0.079,
+        "svi_score": 0.896,
+        "poverty_rate": 0.409,
+        "elderly_pct": 0.189,
+        "impervious_pct": 0.895,
+        "extreme_heat_days": 50
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112700",
+        "tract_name": "East Van Buren Commercial Corridor",
+        "year": 2022,
+        "lst_median_c": 47.08,
+        "lst_anomaly_c": 4.38,
+        "ndvi_mean": 0.072,
+        "svi_score": 0.908,
+        "poverty_rate": 0.418,
+        "elderly_pct": 0.192,
+        "impervious_pct": 0.9,
+        "extreme_heat_days": 52
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.4444
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.0637,
+              33.4444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112700",
+        "tract_name": "East Van Buren Commercial Corridor",
+        "year": 2023,
+        "lst_median_c": 47.5,
+        "lst_anomaly_c": 4.5,
+        "ndvi_mean": 0.065,
+        "svi_score": 0.92,
+        "poverty_rate": 0.428,
+        "elderly_pct": 0.195,
+        "impervious_pct": 0.905,
+        "extreme_heat_days": 53
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.048,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.459
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112800",
+        "tract_name": "Garfield Historic District",
+        "year": 2018,
+        "lst_median_c": 43.1,
+        "lst_anomaly_c": 1.6,
+        "ndvi_mean": 0.18,
+        "svi_score": 0.68,
+        "poverty_rate": 0.22,
+        "elderly_pct": 0.14,
+        "impervious_pct": 0.72,
+        "extreme_heat_days": 38
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.048,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.459
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112800",
+        "tract_name": "Garfield Historic District",
+        "year": 2019,
+        "lst_median_c": 43.25,
+        "lst_anomaly_c": 1.45,
+        "ndvi_mean": 0.178,
+        "svi_score": 0.675,
+        "poverty_rate": 0.216,
+        "elderly_pct": 0.143,
+        "impervious_pct": 0.725,
+        "extreme_heat_days": 39
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.048,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.459
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112800",
+        "tract_name": "Garfield Historic District",
+        "year": 2020,
+        "lst_median_c": 43.4,
+        "lst_anomaly_c": 1.1,
+        "ndvi_mean": 0.176,
+        "svi_score": 0.67,
+        "poverty_rate": 0.212,
+        "elderly_pct": 0.146,
+        "impervious_pct": 0.73,
+        "extreme_heat_days": 41
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.048,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.459
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112800",
+        "tract_name": "Garfield Historic District",
+        "year": 2021,
+        "lst_median_c": 43.55,
+        "lst_anomaly_c": 1.45,
+        "ndvi_mean": 0.174,
+        "svi_score": 0.665,
+        "poverty_rate": 0.208,
+        "elderly_pct": 0.149,
+        "impervious_pct": 0.735,
+        "extreme_heat_days": 42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.048,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.459
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112800",
+        "tract_name": "Garfield Historic District",
+        "year": 2022,
+        "lst_median_c": 43.7,
+        "lst_anomaly_c": 1.0,
+        "ndvi_mean": 0.172,
+        "svi_score": 0.66,
+        "poverty_rate": 0.204,
+        "elderly_pct": 0.152,
+        "impervious_pct": 0.74,
+        "extreme_heat_days": 44
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0637,
+              33.459
+            ],
+            [
+              -112.048,
+              33.459
+            ],
+            [
+              -112.048,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.47
+            ],
+            [
+              -112.0637,
+              33.459
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013112800",
+        "tract_name": "Garfield Historic District",
+        "year": 2023,
+        "lst_median_c": 43.85,
+        "lst_anomaly_c": 0.85,
+        "ndvi_mean": 0.17,
+        "svi_score": 0.655,
+        "poverty_rate": 0.2,
+        "elderly_pct": 0.155,
+        "impervious_pct": 0.745,
+        "extreme_heat_days": 45
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.454
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114200",
+        "tract_name": "Roosevelt Row Arts District",
+        "year": 2018,
+        "lst_median_c": 42.8,
+        "lst_anomaly_c": 1.3,
+        "ndvi_mean": 0.16,
+        "svi_score": 0.45,
+        "poverty_rate": 0.14,
+        "elderly_pct": 0.09,
+        "impervious_pct": 0.76,
+        "extreme_heat_days": 36
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.454
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114200",
+        "tract_name": "Roosevelt Row Arts District",
+        "year": 2019,
+        "lst_median_c": 42.88,
+        "lst_anomaly_c": 1.08,
+        "ndvi_mean": 0.165,
+        "svi_score": 0.435,
+        "poverty_rate": 0.128,
+        "elderly_pct": 0.093,
+        "impervious_pct": 0.765,
+        "extreme_heat_days": 37
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.454
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114200",
+        "tract_name": "Roosevelt Row Arts District",
+        "year": 2020,
+        "lst_median_c": 42.96,
+        "lst_anomaly_c": 0.66,
+        "ndvi_mean": 0.17,
+        "svi_score": 0.42,
+        "poverty_rate": 0.116,
+        "elderly_pct": 0.096,
+        "impervious_pct": 0.77,
+        "extreme_heat_days": 39
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.454
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114200",
+        "tract_name": "Roosevelt Row Arts District",
+        "year": 2021,
+        "lst_median_c": 43.04,
+        "lst_anomaly_c": 0.94,
+        "ndvi_mean": 0.175,
+        "svi_score": 0.405,
+        "poverty_rate": 0.104,
+        "elderly_pct": 0.099,
+        "impervious_pct": 0.775,
+        "extreme_heat_days": 40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.454
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114200",
+        "tract_name": "Roosevelt Row Arts District",
+        "year": 2022,
+        "lst_median_c": 43.12,
+        "lst_anomaly_c": 0.42,
+        "ndvi_mean": 0.18,
+        "svi_score": 0.39,
+        "poverty_rate": 0.092,
+        "elderly_pct": 0.102,
+        "impervious_pct": 0.78,
+        "extreme_heat_days": 42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.0836,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.454
+            ],
+            [
+              -112.0637,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.468
+            ],
+            [
+              -112.0836,
+              33.454
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114200",
+        "tract_name": "Roosevelt Row Arts District",
+        "year": 2023,
+        "lst_median_c": 43.2,
+        "lst_anomaly_c": 0.2,
+        "ndvi_mean": 0.185,
+        "svi_score": 0.375,
+        "poverty_rate": 0.08,
+        "elderly_pct": 0.105,
+        "impervious_pct": 0.785,
+        "extreme_heat_days": 43
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.1,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.459
+            ],
+            [
+              -112.1,
+              33.459
+            ],
+            [
+              -112.1,
+              33.44
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114300",
+        "tract_name": "Capitol & Government Mall",
+        "year": 2018,
+        "lst_median_c": 44.5,
+        "lst_anomaly_c": 3.0,
+        "ndvi_mean": 0.14,
+        "svi_score": 0.6,
+        "poverty_rate": 0.2,
+        "elderly_pct": 0.12,
+        "impervious_pct": 0.83,
+        "extreme_heat_days": 41
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.1,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.459
+            ],
+            [
+              -112.1,
+              33.459
+            ],
+            [
+              -112.1,
+              33.44
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114300",
+        "tract_name": "Capitol & Government Mall",
+        "year": 2019,
+        "lst_median_c": 44.75,
+        "lst_anomaly_c": 2.95,
+        "ndvi_mean": 0.136,
+        "svi_score": 0.605,
+        "poverty_rate": 0.204,
+        "elderly_pct": 0.123,
+        "impervious_pct": 0.835,
+        "extreme_heat_days": 42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.1,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.459
+            ],
+            [
+              -112.1,
+              33.459
+            ],
+            [
+              -112.1,
+              33.44
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114300",
+        "tract_name": "Capitol & Government Mall",
+        "year": 2020,
+        "lst_median_c": 45.0,
+        "lst_anomaly_c": 2.7,
+        "ndvi_mean": 0.132,
+        "svi_score": 0.61,
+        "poverty_rate": 0.208,
+        "elderly_pct": 0.126,
+        "impervious_pct": 0.84,
+        "extreme_heat_days": 44
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.1,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.459
+            ],
+            [
+              -112.1,
+              33.459
+            ],
+            [
+              -112.1,
+              33.44
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114300",
+        "tract_name": "Capitol & Government Mall",
+        "year": 2021,
+        "lst_median_c": 45.25,
+        "lst_anomaly_c": 3.15,
+        "ndvi_mean": 0.128,
+        "svi_score": 0.615,
+        "poverty_rate": 0.212,
+        "elderly_pct": 0.129,
+        "impervious_pct": 0.845,
+        "extreme_heat_days": 46
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.1,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.459
+            ],
+            [
+              -112.1,
+              33.459
+            ],
+            [
+              -112.1,
+              33.44
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114300",
+        "tract_name": "Capitol & Government Mall",
+        "year": 2022,
+        "lst_median_c": 45.5,
+        "lst_anomaly_c": 2.8,
+        "ndvi_mean": 0.124,
+        "svi_score": 0.62,
+        "poverty_rate": 0.216,
+        "elderly_pct": 0.132,
+        "impervious_pct": 0.85,
+        "extreme_heat_days": 47
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.1,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.44
+            ],
+            [
+              -112.0836,
+              33.459
+            ],
+            [
+              -112.1,
+              33.459
+            ],
+            [
+              -112.1,
+              33.44
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "tract_id": "04013114300",
+        "tract_name": "Capitol & Government Mall",
+        "year": 2023,
+        "lst_median_c": 45.75,
+        "lst_anomaly_c": 2.75,
+        "ndvi_mean": 0.12,
+        "svi_score": 0.625,
+        "poverty_rate": 0.22,
+        "elderly_pct": 0.135,
+        "impervious_pct": 0.855,
+        "extreme_heat_days": 48
+      }
+    }
+  ]
+}

@@ -64,11 +64,24 @@ def compute_benefit_score(gdf: pd.DataFrame, weights: BenefitWeights) -> pd.Data
     out["norm_energy"] = _normalize(out["annual_savings_usd"])
     out["norm_equity"] = _normalize(out["svi_score"])
 
-    out["benefit_score"] = (
-        w.w_heat * out["norm_heat"]
-        + w.w_energy * out["norm_energy"]
-        + w.w_equity * out["norm_equity"]
-    )
+    has_urgency = "neighborhood_urgency_score" in out.columns and getattr(w, "w_urgency", 0.0) > 0.0
+    if has_urgency:
+        out["norm_urgency"] = _normalize(out["neighborhood_urgency_score"])
+        out["benefit_score"] = (
+            w.w_heat * out["norm_heat"]
+            + w.w_energy * out["norm_energy"]
+            + w.w_equity * out["norm_equity"]
+            + w.w_urgency * out["norm_urgency"]
+        )
+    else:
+        out["norm_urgency"] = 0.0
+        w_sub = w.w_heat + w.w_energy + w.w_equity
+        scale = 1.0 / w_sub if w_sub > 0 else 1.0
+        out["benefit_score"] = (
+            (w.w_heat * scale) * out["norm_heat"]
+            + (w.w_energy * scale) * out["norm_energy"]
+            + (w.w_equity * scale) * out["norm_equity"]
+        )
     return out
 
 

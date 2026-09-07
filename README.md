@@ -65,11 +65,12 @@ services/
   spatial.py              Vector/raster CRS alignment
   metrics.py              Thermal anomaly, candidate filtering
   vulnerability.py        Social equity input (real-data hook + mock fallback)
+  ml_urgency.py           Machine Learning forward neighborhood trajectory & urgency engine
   economics.py            Cost / energy savings / payback model
   optimization.py         Benefit score + 0/1 ILP (PuLP)
   pipeline.py             Orchestrates the above, Streamlit-independent
 ui/
-  dashboard.py            Sidebar controls, KPIs, selection table
+  dashboard.py            Sidebar controls, KPIs, selection table, ML insights card
   map.py                  PyDeck 3D map layer
 utils/
   geo.py                  CRS-safe area/perimeter/compactness, UTM zone inference
@@ -77,6 +78,15 @@ utils/
   logging.py              Logging setup
 tests/                    pytest unit + formula tests (no network/raster needed)
 ```
+
+## Machine Learning: Neighborhood Urgency & Climate Trajectories
+
+CoolCorridor includes a forward-looking Machine Learning component (`services/ml_urgency.py`) that analyzes multi-year historical Census Tract panel data (Landsat LST, vegetation NDVI, CDC SVI, poverty rates, and extreme heat frequency) over a 5-year rolling lookback window.
+
+- **Objective**: Forecast which neighborhoods are on the fastest deteriorating heat-vulnerability trajectory over the next 3–5 years.
+- **Features**: Linear temperature slopes, anomaly acceleration drift, canopy loss rates, poverty trends, and compound risk interaction terms (e.g. $\text{Heat Slope} \times \text{Poverty Rate}$, treeless canopy deprivation ratio).
+- **Interpretable Model**: Regularized Ridge regression with human-interpretable feature attributions (e.g. *"+35% tree canopy loss, +28% accelerating thermal anomaly"*), with zero-dependency linear algebra fallback if `scikit-learn` is not yet installed.
+- **Spatial Join**: Neighborhood urgency scores ($U_j \in [0, 1]$) are joined to building footprints and feed directly into the optimization objective.
 
 ## Optimization formulation
 
@@ -88,7 +98,7 @@ subject to Σ cost_i · x_i ≤ budget
            x_i ∈ {0, 1}
 ```
 
-`benefit_i = w_heat·norm(anomaly_i) + w_energy·norm(savings_i) + w_equity·norm(svi_i)`,
+`benefit_i = w_heat·norm(anomaly_i) + w_energy·norm(savings_i) + w_equity·norm(svi_i) + w_urgency·norm(urgency_i)`,
 weights configurable in the sidebar and re-normalized to sum to 1. Each
 component is min-max normalized across the candidate set before combining
 (they live on very different scales — degrees C, dollars, a 0–1 index).

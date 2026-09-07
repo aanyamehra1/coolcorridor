@@ -14,6 +14,7 @@ from services.optimization import optimize_selection
 from ui.dashboard import (
     render_sidebar, to_app_config, render_data_quality_banner,
     render_kpis, render_selection_table, render_about_section,
+    render_neighborhood_urgency_panel,
 )
 from ui.map import build_deck
 from ui.theme import inject_css, render_header, render_map_legend, render_theme_toggle
@@ -55,7 +56,7 @@ def _cached_candidates(config_key: tuple):
     from config.settings import AppConfig, FilterConfig, EconomicConfig, BenefitWeights
     (place_name, epsg, raster_path, tags_frozen,
      min_area, min_anom, max_anom, require_thermal,
-     cost, rate, cooling, w_heat, w_energy, w_equity, budget) = config_key
+     cost, rate, cooling, w_heat, w_energy, w_equity, w_urgency, budget) = config_key
 
     from config.settings import StudyAreaConfig
     cfg = AppConfig(
@@ -75,7 +76,9 @@ def _cached_candidates(config_key: tuple):
             coating_cost_per_m2=cost, electricity_rate_per_kwh=rate,
             annual_cooling_factor_kwh_per_m2=cooling,
         ),
-        weights=BenefitWeights(w_heat=w_heat, w_energy=w_energy, w_equity=w_equity),
+        weights=BenefitWeights(
+            w_heat=w_heat, w_energy=w_energy, w_equity=w_equity, w_urgency=w_urgency
+        ),
         default_budget_usd=budget,
     )
     with st.status("Building candidate dataset...", expanded=True) as status:
@@ -103,6 +106,7 @@ def main() -> None:
         config.economics.coating_cost_per_m2, config.economics.electricity_rate_per_kwh,
         config.economics.annual_cooling_factor_kwh_per_m2,
         config.weights.w_heat, config.weights.w_energy, config.weights.w_equity,
+        config.weights.w_urgency,
         config.default_budget_usd,
     )
 
@@ -140,6 +144,13 @@ def main() -> None:
         )
         render_kpis(result, n_candidates=len(candidates))
 
+    # Render ML Neighborhood Urgency insights panel
+    if pipeline_result.neighborhood_urgency_summary:
+        render_neighborhood_urgency_panel(
+            pipeline_result.neighborhood_urgency_summary,
+            used_ml=pipeline_result.used_ml_urgency,
+        )
+
     st.markdown('<div class="cc-section-title">Explore the map</div>', unsafe_allow_html=True)
     with st.container(border=True):
         gdf_wgs84 = result.gdf.to_crs(epsg=4326)
@@ -151,3 +162,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

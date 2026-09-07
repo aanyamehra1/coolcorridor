@@ -63,6 +63,13 @@ def build_deck(candidates_wgs84: gpd.GeoDataFrame) -> pdk.Deck:
     )
     gdf["fill_color"] = _fill_colors(gdf)
 
+    if "tract_name" not in gdf.columns:
+        gdf["tract_name"] = "Downtown"
+    if "neighborhood_urgency_score" not in gdf.columns:
+        gdf["neighborhood_urgency_score"] = 0.5
+    if "urgency_primary_driver" not in gdf.columns:
+        gdf["urgency_primary_driver"] = "District baseline"
+
     layer = pdk.Layer(
         "GeoJsonLayer",
         gdf,
@@ -89,9 +96,12 @@ def build_deck(candidates_wgs84: gpd.GeoDataFrame) -> pdk.Deck:
             "<b style='color: #AB907A; font-size: 0.8rem; text-transform: uppercase;'>Building Info</b><br/>"
             "<span style='font-size: 0.9rem;'>"
             "<b>ID:</b> {osm_building_id}<br/>"
+            "<b>District:</b> {tract_name}<br/>"
             "<b>Area:</b> {roof_area_m2} m²<br/>"
             "<b>LST (Median):</b> {lst_median_c}°C<br/>"
             "<b>Anomaly:</b> +{lst_anomaly_c}°C<br/>"
+            "<b>ML Urgency:</b> {neighborhood_urgency_score}<br/>"
+            "<b>Key Driver:</b> {urgency_primary_driver}<br/>"
             "<b>Score:</b> {benefit_score}<br/>"
             "<b>Status:</b> {status_label}<br/>"
             "<b>Est. Cost:</b> ${intervention_cost_usd}"

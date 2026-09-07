@@ -22,6 +22,7 @@ class UserInputs:
     heat_weight: float
     energy_weight: float
     equity_weight: float
+    urgency_weight: float
 
 
 def render_about_section() -> None:
@@ -47,11 +48,13 @@ def render_about_section() -> None:
                 satellite imagery. A bigger number means more to gain from
                 cooling it.</li>
                 <li><b>Benefit score</b> — a single 0–1 ranking that blends
-                heat reduction, estimated energy savings, and neighborhood
-                equity.</li>
+                heat reduction, estimated energy savings, equity, and forward ML urgency.</li>
                 <li><b>Equity / SVI</b> — a social-vulnerability signal, so
                 the tool can favor neighborhoods that are more exposed to
                 heat-related harm.</li>
+                <li><b>Forward Urgency (ML)</b> — a predictive machine learning score
+                forecasting which neighborhoods are accelerating in heat vulnerability
+                and canopy loss over the next 3–5 years based on multi-year historical data.</li>
             </ul>
             </div>
             """,
@@ -93,6 +96,10 @@ def render_sidebar(defaults: AppConfig) -> UserInputs:
             "Equity weight", 0.0, 1.0, defaults.weights.w_equity, 0.05,
             help="How much neighborhood social-vulnerability counts toward the benefit score.",
         )
+        urgency_weight = st.slider(
+            "Urgency weight (ML Trajectory)", 0.0, 1.0, defaults.weights.w_urgency, 0.05,
+            help="How much a neighborhood's forward-looking climate-equity escalation (ML) counts toward the benefit score.",
+        )
 
     with col_controls:
         with st.expander("Candidate Filters", expanded=True):
@@ -125,6 +132,7 @@ def render_sidebar(defaults: AppConfig) -> UserInputs:
         coating_cost=coating_cost, electricity_rate=electricity_rate,
         cooling_factor=cooling_factor, heat_weight=heat_weight,
         energy_weight=energy_weight, equity_weight=equity_weight,
+        urgency_weight=urgency_weight,
     )
 
 
@@ -146,10 +154,12 @@ def to_app_config(base: AppConfig, inputs: UserInputs) -> AppConfig:
         ),
         weights=BenefitWeights(
             w_heat=inputs.heat_weight, w_energy=inputs.energy_weight,
-            w_equity=inputs.equity_weight,
+            w_equity=inputs.equity_weight, w_urgency=inputs.urgency_weight,
         ),
+        ml=base.ml,
         default_budget_usd=inputs.budget,
     )
+
 
 
 def render_data_quality_banner(
@@ -226,6 +236,35 @@ def render_kpis(result: OptimizationResult, n_candidates: int) -> None:
         col8.metric("Est. Payback Period", f"{payback:.1f} yrs" if payback == payback else "N/A")
 
 
+def render_neighborhood_urgency_panel(summary: list[dict], used_ml: bool = True) -> None:
+    """Renders the ML Neighborhood Urgency & Climate Trajectory insights card."""
+    if not summary:
+        return
+
+    st.markdown('<div class="cc-section-title">Machine Learning: Neighborhood Urgency & Climate Trajectories</div>', unsafe_allow_html=True)
+    with st.container(border=True):
+        st.markdown(
+            "**Forward-Looking Risk Surveillance**: Rather than evaluating roofs in isolation, "
+            "the ML engine models longitudinal trajectories over historical census panel data (2018–2023). "
+            "It highlights neighborhoods where compounding thermal stress, vegetation loss, and socioeconomic "
+            "vulnerability are escalating most rapidly."
+        )
+
+        rows = []
+        for item in summary:
+            score = item.get("urgency_score", 0.0)
+            rows.append({
+                "Neighborhood / Census Tract": item.get("tract_name", item.get("tract_id")),
+                "Trajectory Urgency": f"{score:.3f}",
+                "Risk Level": item.get("urgency_level", "Moderate"),
+                "Primary Driver": item.get("primary_driver", "N/A"),
+                "Secondary Driver": item.get("secondary_driver", "N/A"),
+            })
+
+        df_summary = pd.DataFrame(rows)
+        st.dataframe(df_summary, use_container_width=True, hide_index=True)
+
+
 def render_selection_table(gdf: pd.DataFrame) -> None:
     selected = gdf[gdf["selected"] == 1]
     
@@ -236,7 +275,8 @@ def render_selection_table(gdf: pd.DataFrame) -> None:
         return
         
     cols = [
-        "osm_building_id", "roof_area_m2", "lst_median_c", "lst_anomaly_c",
+        "osm_building_id", "tract_name", "roof_area_m2", "lst_median_c", "lst_anomaly_c",
+        "neighborhood_urgency_score", "urgency_primary_driver",
         "intervention_cost_usd", "annual_savings_usd", "payback_years",
         "svi_score", "benefit_score",
     ]

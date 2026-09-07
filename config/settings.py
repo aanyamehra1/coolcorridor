@@ -132,19 +132,34 @@ class EconomicConfig:
 
 @dataclass(frozen=True)
 class BenefitWeights:
-    w_heat: float = 0.4
-    w_energy: float = 0.3
-    w_equity: float = 0.3
+    w_heat: float = 0.35
+    w_energy: float = 0.25
+    w_equity: float = 0.20
+    w_urgency: float = 0.20
 
     def normalized(self) -> "BenefitWeights":
-        total = self.w_heat + self.w_energy + self.w_equity
+        total = self.w_heat + self.w_energy + self.w_equity + self.w_urgency
         if total <= 0:
             raise ValueError("Benefit weights must sum to a positive number.")
         return BenefitWeights(
             w_heat=self.w_heat / total,
             w_energy=self.w_energy / total,
             w_equity=self.w_equity / total,
+            w_urgency=self.w_urgency / total,
         )
+
+
+# ---------------------------------------------------------------------------
+# Machine Learning trajectory configuration
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class MLConfig:
+    historical_panel_path: str = "data/raw/phoenix_neighborhood_history.geojson"
+    enable_ml_urgency: bool = True
+    lookback_years: int = 5
+    current_year: int = 2023
+    ridge_alpha: float = 1.0
 
 
 # ---------------------------------------------------------------------------
@@ -158,7 +173,9 @@ class AppConfig:
     filters: FilterConfig = field(default_factory=FilterConfig)
     economics: EconomicConfig = field(default_factory=EconomicConfig)
     weights: BenefitWeights = field(default_factory=BenefitWeights)
+    ml: MLConfig = field(default_factory=MLConfig)
     default_budget_usd: float = 250_000.0
 
 
 DEFAULT_CONFIG = AppConfig()
+

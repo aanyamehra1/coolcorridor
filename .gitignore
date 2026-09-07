@@ -6,3 +6,4 @@ data/processed/*.geojson
 data/raw/*.tif
 data/processed/satellite_cache/
 .env
+.DS_Store

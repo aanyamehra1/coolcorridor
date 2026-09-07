@@ -47,7 +47,7 @@ LIGHT = {
     "bg_elevated": "#FFFFFF",
     "bg_card": "#FFFFFF",
     "border": C_TAUPE,
-    "text_primary": C_DEEP_TEAL,
+    "text_primary": C_TAUPE,
     "text_secondary": C_BROWN,
     "accent": C_TURQUOISE,
     "accent_soft": "rgba(12, 124, 129, 0.10)",

@@ -73,7 +73,7 @@ def build_deck(candidates_wgs84: gpd.GeoDataFrame) -> pdk.Deck:
         wireframe=True,
         get_elevation="viz_height_m",
         get_fill_color="fill_color",
-        get_line_color=[255, 255, 255, 40],
+        get_line_color=[74, 59, 48, 90],  # Soft dark taupe wireframe for light background contrast
         pickable=True,
         auto_highlight=True,
     )
@@ -110,6 +110,7 @@ def build_deck(candidates_wgs84: gpd.GeoDataFrame) -> pdk.Deck:
     return pdk.Deck(
         layers=[layer],
         initial_view_state=view_state,
-        map_style="mapbox://styles/mapbox/dark-v11",
+        map_style="mapbox://styles/mapbox/light-v11",  # Off-white / cream vector basemap
         tooltip=tooltip,
     )
+    
